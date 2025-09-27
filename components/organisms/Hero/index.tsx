@@ -15,10 +15,10 @@ export default function Hero() {
         >
           <H1>Websites that whisper luxury and convert with clarity.</H1>
           <Text>Strategic, premium web design for brands that value trust and results.</Text>
-          <div className="flex items-center justify-center gap-3">
-            <Button>Start a Project</Button>
-            <Button variant="ghost">View Portfolio</Button>
-          </div>
+         <div className="flex items-center justify-center gap-3">
+  <Button variant="solid">Start a Project</Button>
+  <Button variant="outline" tone="neutral">View Portfolio</Button>
+</div>
         </motion.div>
       </div>
     </section>
