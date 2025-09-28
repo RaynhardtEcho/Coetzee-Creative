@@ -2,28 +2,38 @@
 'use client';
 
 import Image, { type StaticImageData } from 'next/image';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
+type ImgSrc = string | StaticImageData;
 
 type Props = {
-  images: ReadonlyArray<string | StaticImageData>; // not optional
-  index: number;
-  setIndex: (i: number) => void;
+  images: Array<ImgSrc | undefined>;
+  initialIndex?: number; // preferred prop
+  start?: number;        // legacy alias supported
   onClose: () => void;
 };
 
-export default function Lightbox({ images, index, setIndex, onClose }: Props) {
-  // Guard empty inputs
-  if (!images || images.length === 0) return null;
+export default function Lightbox({ images, initialIndex, start, onClose }: Props) {
+  // Sanitize so everything is a valid src for <Image>
+  const imgs = useMemo(
+    () => (images ?? []).filter((v): v is ImgSrc => Boolean(v)),
+    [images]
+  );
 
-  const len = images.length;
-  const i = ((index % len) + len) % len; // 0..len-1
+  // Nothing to show
+  if (imgs.length === 0) return null;
 
-  // With noUncheckedIndexedAccess, index access is possibly undefined.
-  // Provide a safe fallback and narrow the type to NonNullable.
-  const src: NonNullable<(typeof images)[number]> = images[i] ?? images[0]!;
+  // Resolve starting index and clamp
+  const resolvedStart =
+    Number.isFinite(start) ? Number(start) :
+    Number.isFinite(initialIndex) ? Number(initialIndex) : 0;
 
-  const prev = () => setIndex((i - 1 + len) % len);
-  const next = () => setIndex((i + 1) % len);
+  const clamp = (n: number) => (n % imgs.length + imgs.length) % imgs.length;
+
+  const [i, setI] = useState<number>(clamp(Math.max(0, resolvedStart)));
+
+  const prev = useCallback(() => setI(v => clamp(v - 1)), [imgs.length]);
+  const next = useCallback(() => setI(v => clamp(v + 1)), [imgs.length]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -33,30 +43,23 @@ export default function Lightbox({ images, index, setIndex, onClose }: Props) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i, len]);
+  }, [onClose, prev, next]);
+
+  // At this point, because we clamp and imgs.length > 0, imgs[i] exists:
+  const src: ImgSrc = imgs[i]!;
 
   return (
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 grid place-items-center bg-black/70 backdrop-blur-sm"
-      onClick={onClose}
+      className="fixed inset-0 z-[100] grid place-items-center bg-black/80 backdrop-blur-sm p-4"
     >
-      <button
-        aria-label="Previous image"
-        onClick={(e) => { e.stopPropagation(); prev(); }}
-        className="absolute left-4 md:left-8 btn-ghost"
-      >
-        ‹
-      </button>
+      <button aria-label="Close" onClick={onClose} className="absolute top-4 right-4 btn-ghost">✕</button>
+      <button aria-label="Previous image" onClick={prev} className="absolute left-4 md:left-8 btn-ghost">‹</button>
 
-      <div
-        className="relative w-full max-w-5xl aspect-[16/10] rounded-xl overflow-hidden border border-white/10 bg-black"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="relative w-full max-w-5xl aspect-[16/10] rounded-xl overflow-hidden border border-white/10 bg-black">
         <Image
-          src={src} // string | StaticImageData (never undefined)
+          src={src}
           alt={`Gallery image ${i + 1}`}
           fill
           className="object-contain"
@@ -64,13 +67,7 @@ export default function Lightbox({ images, index, setIndex, onClose }: Props) {
         />
       </div>
 
-      <button
-        aria-label="Next image"
-        onClick={(e) => { e.stopPropagation(); next(); }}
-        className="absolute right-4 md:right-8 btn-ghost"
-      >
-        ›
-      </button>
+      <button aria-label="Next image" onClick={next} className="absolute right-4 md:right-8 btn-ghost">›</button>
     </div>
   );
 }

@@ -79,7 +79,7 @@ export default function PortfolioPageClient() {
               </button>
             ))}
           </div>
-          {open && <Lightbox images={PIETER_IMAGES} start={startIdx} onClose={() => setOpen(false)} />}
+         ` {open && <Lightbox images={PIETER_IMAGES} start={startIdx} onClose={() => setOpen(false)} />}`
 
           {/* BOUNDLESS card */}
           <CaseStudyCard
