@@ -39,8 +39,8 @@ const TERMS: Route = '/terms';
 export default function Footer({
   instagramUrl = 'https://www.instagram.com/coetzee.creative',
   whatsappNumberE164 = '27814080806',
-  email = 'raynhardt34@gmail.com',
-  phoneDisplay = '+27 X XX XXX XXXX',
+  email = 'raynhardt34@coetzeecreative.co.za',
+  phoneDisplay = '+27 81 408 0806',
 }: FooterProps) {
   const waHref = useMemo(() => {
     const msg = encodeURIComponent("Hi Coetzee Creative — I'd like a quote.");
@@ -143,7 +143,7 @@ export default function Footer({
 
       {/* Sub-footer */}
       <div className="border-t border-white/10">
-        <div className="container py-4 md:py-5 text-center text-sm text-white/50 pb-[env(safe-area-inset-bottom)]">
+        <div className="container py-5 md:py-6 text-center text-sm text-white/50 pb-[env(safe-area-inset-bottom)]">
           © {new Date().getFullYear()} Coetzee Creative • Built in South Africa
           <span className="mx-2">•</span>
           <Link href={PRIVACY} className="hover:text-white">Privacy</Link>

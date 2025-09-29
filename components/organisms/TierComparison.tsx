@@ -17,11 +17,9 @@ const ROWS: Row[] = [
 ];
 
 function BoolCell({ value }: { value: boolean | 'na' }) {
-  // Dash for NA or not-included (keeps table crisp)
   if (value === 'na' || value === false) {
     return <span className="text-[color:var(--ui-accent)]">—</span>;
   }
-  // Included = neutral checkmark
   return (
     <span
       role="img"
@@ -48,19 +46,26 @@ export default function TierComparison() {
         <div aria-hidden className="rule-neutral mt-5 mx-auto" />
       </header>
 
-      <div className="overflow-x-auto mask-fade rounded-2xl border border-white/10">
-        <table className="table-fixed w-full text-left text-sm">
-          <caption className="sr-only">Package feature comparison across Professional, Premium, and Sophisticated tiers</caption>
+      {/* Scrollable shell (focusable for keyboard scroll) */}
+      <div
+        className="relative overflow-x-auto rounded-2xl border border-white/10"
+        tabIndex={0}
+      >
+        <table className="min-w-[720px] md:min-w-full w-full text-left text-[13px] md:text-sm">
+          <caption className="sr-only">
+            Package feature comparison across Professional, Premium, and Sophisticated tiers
+          </caption>
 
+          {/* Slightly wider feature column on mobile so labels don’t wrap awkwardly */}
           <colgroup>
-            <col className="w-[34%]" />
-            <col className="w-[22%]" />
-            <col className="w-[22%]" />
-            <col className="w-[22%]" />
+            <col className="w-[42%] md:w-[34%]" />
+            <col className="w-[19%] md:w-[22%]" />
+            <col className="w-[19%] md:w-[22%]" />
+            <col className="w-[20%] md:w-[22%]" />
           </colgroup>
 
           <thead className="bg-white/[0.04] thead-sticky">
-            <tr className="[&>th]:p-4 [&>th]:font-medium [&>th]:text-white/80">
+            <tr className="[&>th]:p-3 md:[&>th]:p-4 [&>th]:font-medium [&>th]:text-white/80">
               <th
                 scope="col"
                 className="sticky left-0 z-20 bg-gradient-to-r from-black to-black/90"
@@ -93,13 +98,13 @@ export default function TierComparison() {
               >
                 <th
                   scope="row"
-                  className="p-4 font-medium text-white/90 sticky left-0 z-10 bg-gradient-to-r from-black to-black/90"
+                  className="p-3 md:p-4 font-medium text-white/90 sticky left-0 z-10 bg-gradient-to-r from-black to-black/90"
                 >
                   {r.feature}
                 </th>
-                <td className="p-4"><Cell v={r.pro} /></td>
-                <td className="p-4"><Cell v={r.prem} /></td>
-                <td className="p-4"><Cell v={r.soph} /></td>
+                <td className="p-3 md:p-4"><Cell v={r.pro} /></td>
+                <td className="p-3 md:p-4"><Cell v={r.prem} /></td>
+                <td className="p-3 md:p-4"><Cell v={r.soph} /></td>
               </tr>
             ))}
           </tbody>

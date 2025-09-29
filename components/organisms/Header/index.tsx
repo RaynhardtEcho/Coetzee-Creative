@@ -60,37 +60,43 @@ export default function Header() {
         height: scrolled ? HEADER_COMPACT : HEADER_TALL,
       }}
     >
-      <div className="container flex h-full items-center justify-between gap-4">
-        <Logo className="shrink-0" priority />
+   <div
+  className="w-full flex h-full items-center justify-between gap-3 pr-4 md:pr-10 xl:pr-16 2xl:pr-24"
+  style={{
+    paddingInlineStart: 'env(safe-area-inset-left,0px)',
+  }}
+>
+  <Logo className="shrink-0 -ml-10 md:-ml-10" priority />
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Drawer trigger */}
-          <button
-            ref={triggerRef}
-            type="button"
-            className="inline-flex items-center justify-center rounded-md px-3 py-3 text-white/90 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--rgb-border))]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-            aria-label="Open menu"
-            aria-expanded={open}
-            aria-controls="site-menu"
-            onClick={() => setOpen(true)}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </button>
+  <div className="flex items-center gap-2 sm:gap-3">
+    <button
+      ref={triggerRef}
+      type="button"
+      className="inline-flex items-center justify-center rounded-md px-3 py-3 text-white/90 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--rgb-border))]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+      aria-label="Open menu"
+      aria-expanded={open}
+      aria-controls="site-menu"
+      onClick={() => setOpen(true)}
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    </button>
 
-          {/* Primary CTA (gold) — avoid nested anchors */}
-          <Link href={'/contact' as Route} aria-label="Contact us">
-            <Button as="span" size="md" variant="solid" className="min-w-28 sm:min-w-32">
-              Contact
-            </Button>
-          </Link>
-        </div>
-      </div>
+    <Link href={'/contact' as Route} aria-label="Contact us">
+      <Button as="span" size="md" variant="solid" className="min-w-28 sm:min-w-32">
+        Contact
+      </Button>
+    </Link>
+  </div>
+</div>
 
       {/* bottom hairline (neutral) */}
       <div
-        className={['pointer-events-none h-px w-full transition-opacity duration-300', scrolled ? 'opacity-100' : 'opacity-0'].join(' ')}
+        className={[
+          'pointer-events-none h-px w-full transition-opacity duration-300',
+          scrolled ? 'opacity-100' : 'opacity-0',
+        ].join(' ')}
         style={{
           background:
             'linear-gradient(to right, rgb(var(--rgb-border)/0) 0%, rgb(var(--rgb-border)/.35) 50%, rgb(var(--rgb-border)/0) 100%)',

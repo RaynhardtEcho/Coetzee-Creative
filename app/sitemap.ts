@@ -1,23 +1,26 @@
+// app/sitemap.ts
+import { MetadataRoute } from 'next';
 import { CASE_STUDIES } from '@/content/case-studies';
-import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://coetzeecreative.example'; // replace
-  const now = new Date().toISOString();
+  const base = 'https://www.coetzeecreative.co.za';
+  const now = new Date();
 
-  const staticRoutes = ['', '/portfolio', '/services', '/about', '/contact'].map((p) => ({
-    url: `${base}${p || '/'}`,
-    lastModified: now,
-    changeFrequency: 'weekly' as const,
-    priority: p === '' ? 1 : 0.7,
-  }));
-
-  const caseRoutes = CASE_STUDIES.map((c) => ({
-    url: `${base}/portfolio/${c.slug}`,
+  const staticPages = [
+    '', 'services', 'portfolio', 'contact', 'about', 'privacy', 'terms',
+  ].map((p) => ({
+    url: `${base}/${p}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,
-    priority: 0.6,
+    priority: p === '' ? 1 : 0.8,
   }));
 
-  return [...staticRoutes, ...caseRoutes];
+  const studies = CASE_STUDIES.map((s) => ({
+    url: `${base}/portfolio/${s.slug}`,
+    lastModified: now,
+    changeFrequency: 'yearly' as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...studies];
 }

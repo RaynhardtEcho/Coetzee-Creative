@@ -1,9 +1,14 @@
-import type { MetadataRoute } from 'next';
+// app/robots.ts
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const base = 'https://coetzeecreative.example'; // replace
+  const host = 'https://www.coetzeecreative.co.za';
   return {
-    rules: [{ userAgent: '*', allow: '/' }],
-    sitemap: `${base}/sitemap.xml`,
+    rules: {
+      userAgent: '*',
+      allow: '/',
+    },
+    sitemap: `${host}/sitemap.xml`,
+    host,
   };
 }

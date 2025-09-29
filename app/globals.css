@@ -248,6 +248,7 @@ html, body { overflow-x: hidden; }
     padding-right: max(env(safe-area-inset-right), 40px);
   }
 }
+body { margin: 0; }
 
 /* =========================
    Lenis compatibility

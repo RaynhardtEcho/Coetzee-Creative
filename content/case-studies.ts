@@ -1,4 +1,13 @@
 // content/case-studies.ts
+import type { StaticImageData } from 'next/image';
+
+export type ImgSrc = string | StaticImageData;
+
+export type OpenGraphMeta = {
+  image: ImgSrc;            // required image for OG/Twitter
+  title?: string;
+  description?: string;
+};
 
 // Optional richer stats block for outcomes
 export type ResultStat = {
@@ -42,6 +51,9 @@ export type CaseStudy = {
   // Optional lightweight summary fields (not required by CaseStudyPage)
   overview?: string;
   outcomes?: readonly string[];
+
+  // Open Graph metadata (optional but strongly recommended)
+  og?: OpenGraphMeta;
 };
 
 // ---------------------------
@@ -98,6 +110,14 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
       'Improved mobile performance and readability',
       'Subtle motion that supports brand tone',
     ] as const,
+
+    // Open Graph (used by generateMetadata helper)
+    og: {
+      image: '/portfolio/interio/cover.jpg',
+      title: 'INTERIO Studio — Case Study',
+      description:
+        'A refined, conversion-ready site with premium visuals, clear UX, and measurable outcomes.',
+    },
   },
 
   {
@@ -134,6 +154,13 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
       description:
         'We simplified discovery-to-booking with clear pages, concise copy, and supportive visuals.',
       image: '/portfolio/boundless/cover.jpg',
+    },
+
+    og: {
+      image: '/portfolio/boundless/cover.jpg',
+      title: 'Boundless Retreats — Case Study',
+      description:
+        'A calm, persuasive booking flow with clear itineraries and trust signals that lift conversions.',
     },
   },
 
@@ -172,6 +199,13 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
         'A catalogue-forward experience with elegant product presentation and clear routes to purchase or enquire.',
       image: '/portfolio/lessing/cover.jpg',
     },
+
+    og: {
+      image: '/portfolio/lessing/cover.jpg',
+      title: 'Lessing Wines — Case Study',
+      description:
+        'An elegant catalogue experience with tasting notes and clear wholesale enquiry paths.',
+    },
   },
 ] as const;
 
@@ -179,4 +213,3 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
 export function getCaseBySlug(slug: string): CaseStudy | undefined {
   return CASE_STUDIES.find((c) => c.slug === slug);
 }
-``

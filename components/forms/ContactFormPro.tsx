@@ -18,6 +18,8 @@ const Schema = z.object({
   company: z.string().optional(),
   message: z.string().min(10, 'A little more detail helps (10+ chars)'),
   package: PackageEnum.optional(),
+  // Honeypot (must be empty). Bots will fill this.
+  website: z.string().max(0).optional(),
 });
 export type ContactFormValues = z.infer<typeof Schema>;
 
@@ -87,15 +89,22 @@ export default function ContactForm({ initialPackage }: { initialPackage?: Packa
     watch,
     setValue,
     getValues,
+    reset,
+    setError,
   } = useForm<ContactFormValues>({
     resolver: zodResolver(Schema),
     defaultValues: {
       package: seedPackage,
       message: '', // seeded via effects to avoid clobbering user typing
+      website: '', // honeypot
+      name: '',
+      email: '',
+      company: '',
     },
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [serverErr, setServerErr] = useState<string | null>(null);
   const userTypedMessageRef = useRef(false);
   const selected = watch('package');
 
@@ -125,12 +134,42 @@ export default function ContactForm({ initialPackage }: { initialPackage?: Packa
   }, [selected, getValues, setValue]);
 
   const onSubmit = async (data: ContactFormValues) => {
+    setServerErr(null);
+    setSubmitted(false);
     track('contact_submit', { pkg: data.package });
-    // Replace with your real endpoint/integration:
-    console.log('Contact form submitted', data);
-    setSubmitted(true);
-    // Demo UX only
-    setTimeout(() => setSubmitted(false), 4000);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json?.ok === false) {
+        const msg = json?.error || 'Could not send your message. Please try again.';
+        setServerErr(msg);
+        setError('root', { message: msg });
+        return;
+      }
+
+      setSubmitted(true);
+      reset({
+        package: seedPackage,
+        message: seedPackage ? templateFor(seedPackage) : '',
+        website: '',
+        name: '',
+        email: '',
+        company: '',
+      });
+
+      // fade out success after a bit
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (e: any) {
+      const msg = e?.message || 'Network error. Please try again.';
+      setServerErr(msg);
+      setError('root', { message: msg });
+    }
   };
 
   // error id helpers for a11y
@@ -199,8 +238,15 @@ export default function ContactForm({ initialPackage }: { initialPackage?: Packa
       </label>
       {errors.message && <p id="message-error" className="text-sm text-red-400">{errors.message.message}</p>}
 
-      {/* Honeypot (basic spam guard) */}
-      <input type="text" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden name="website" />
+      {/* Honeypot (basic spam guard) — keep registered so it gets sent */}
+      <input
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+        {...register('website')}
+      />
 
       <div className="pt-2">
         <Button type="submit" disabled={isSubmitting}>
@@ -208,8 +254,15 @@ export default function ContactForm({ initialPackage }: { initialPackage?: Packa
         </Button>
       </div>
 
-      {/* lightweight success note */}
-      {submitted && (
+      {/* Server error */}
+      {serverErr && (
+        <div className="rounded-md border border-red-600/30 bg-red-600/10 p-3 text-sm text-red-200">
+          {serverErr}
+        </div>
+      )}
+
+      {/* Success note */}
+      {submitted && !serverErr && (
         <div className="rounded-md border border-white/15 bg-white/[0.04] p-3 text-sm text-white/80" role="status" aria-live="polite">
           Thanks — we’ve received your message. We’ll reply shortly.
         </div>

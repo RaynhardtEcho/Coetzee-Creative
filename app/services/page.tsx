@@ -13,7 +13,13 @@ import TierComparison from '@/components/organisms/TierComparison';
 import FinalCTA from '@/components/organisms/FinalCTA';
 import JsonLd from '@/components/seo/JsonLd';
 
-export const metadata: Metadata = { title: 'Services — Coetzee Creative' };
+export const metadata: Metadata = {
+  title: 'Services',
+  description:
+    'Website packages and care plans designed for clarity, performance, and measurable ROI.',
+  alternates: { canonical: '/services' },
+  openGraph: { url: '/services' },
+};
 
 const serviceSchema = {
   '@context': 'https://schema.org',
