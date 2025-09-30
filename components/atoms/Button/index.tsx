@@ -13,16 +13,17 @@ type Props = {
   as?: As;
   href?: string;
   variant?: Variant;
-  tone?: Tone;              // <— NEW
+  tone?: Tone;
   size?: Size;
   className?: string;
   children: React.ReactNode;
   event?: { name: string; props?: Record<string, any> };
 } & React.ComponentPropsWithoutRef<'button'>;
 
+// ↓ Slightly more compact on very small screens; normal from sm: and up
 const sizes: Record<Size, string> = {
-  md: 'h-10 px-4 text-sm',
-  lg: 'h-12 px-5 text-base',
+  md: 'h-9 px-3 text-[13px] sm:h-10 sm:px-4 sm:text-sm',
+  lg: 'h-11 px-4 text-[15px] sm:h-12 sm:px-5 sm:text-base',
 };
 
 function base(variant: Variant, tone: Tone) {
@@ -36,9 +37,23 @@ function base(variant: Variant, tone: Tone) {
 }
 
 const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>(
-  ({ as = 'button', href, variant = 'outline', tone = 'gold', size = 'md', className, children, ...rest }, ref) => {
+  (
+    {
+      as = 'button',
+      href,
+      variant = 'outline',
+      tone = 'gold',
+      size = 'md',
+      className,
+      children,
+      ...rest
+    },
+    ref
+  ) => {
     const classes = clsx(
-      'relative inline-flex items-center justify-center rounded-xl font-medium transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:ring-[#C6C6C6]/60',
+      // prevent shrink so it won’t compress near the screen edge
+      'relative inline-flex shrink-0 items-center justify-center rounded-xl font-medium',
+      'transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:ring-[#C6C6C6]/60',
       sizes[size],
       base(variant, tone),
       className
@@ -47,7 +62,6 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, Props>(
     const content = (
       <>
         {children}
-        {/* Only SOLID gets the premium shine */}
         {variant === 'solid' && (
           <span aria-hidden className="btn-premium__shine absolute inset-0 pointer-events-none" />
         )}

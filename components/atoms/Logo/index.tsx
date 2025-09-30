@@ -7,54 +7,23 @@ import Link from 'next/link';
 export default function Logo({
   className = '',
   priority = true,
-}: {
-  className?: string;
-  priority?: boolean;
-}) {
+}: { className?: string; priority?: boolean }) {
+  /**
+   * We give the image its intrinsic ratio with width/height,
+   * then control its rendered size with responsive height classes.
+   * `w-auto` keeps the aspect ratio; height scales per breakpoint.
+   */
   return (
-    <Link
-      href="/"
-      aria-label="Coetzee Creative — Home"
-      className={`group inline-flex  ${className}`}
-    >
-      {/* Responsive wordmark box */}
-      <span className="relative logo-box">
-        <Image
-          src="/brand/logo.png"
-          alt="Coetzee Creative"
-          fill
-          sizes="(max-width: 640px) 72vw, (max-width: 1200px) 28vw, 520px"
-          priority={priority}
-          className="object-contain transition-opacity duration-200 group-hover:opacity-90"
-          style={{
-            filter:
-              'contrast(1.06) brightness(1.07) drop-shadow(0 0 10px rgba(0,0,0,0.55)) drop-shadow(0 0 14px rgba(212,175,55,0.18))',
-            mixBlendMode: 'normal',
-          }}
-        />
-      </span>
-
-      <style jsx>{`
-        /* Default (desktop / tablet) */
-        .logo-box {
-          width: clamp(220px, 28vw, 520px);
-          height: clamp(44px, 6vw, 96px);
-        }
-        /* Up-size on phones */
-        @media (max-width: 640px) {
-          .logo-box {
-            width: min(72vw, 300px);
-            height: clamp(56px, 12vw, 72px);
-          }
-        }
-        /* Tiny phones — a touch more room */
-        @media (max-width: 400px) {
-          .logo-box {
-            width: min(78vw, 320px);
-            height: clamp(60px, 14vw, 76px);
-          }
-        }
-      `}</style>
+    <Link href="/" aria-label="Coetzee Creative — Home" className={`inline-flex items-center ${className}`}>
+      <Image
+        src="/brand/logo-navbar-tight-trans.png"
+        alt="Coetzee Creative"
+        width={160}   // intrinsic (keeps aspect)
+        height={48}   // intrinsic (keeps aspect)
+        priority={priority}
+        sizes="(max-width: 480px) 140px, (max-width: 768px) 160px, 200px"
+        className="block w-auto h-8 xs:h-9 sm:h-10 md:h-12" // <- responsive heights
+      />
     </Link>
   );
 }

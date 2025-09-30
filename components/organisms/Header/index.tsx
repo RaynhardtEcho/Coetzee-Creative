@@ -20,7 +20,7 @@ export default function Header() {
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const pathname = usePathname();
 
-  // shrink threshold
+  // Shrink threshold
   useEffect(() => {
     const onScroll = () => setScrolled((window.scrollY || 0) > 8);
     onScroll();
@@ -28,17 +28,17 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // lock body + focus restore
+  // Lock body + focus restore
   useEffect(() => {
     document.documentElement.classList.toggle('overflow-hidden', open);
     if (open) setTimeout(() => firstLinkRef.current?.focus(), 0);
     else triggerRef.current?.focus();
   }, [open]);
 
-  // close drawer on route change
+  // Close drawer on route change
   useEffect(() => setOpen(false), [pathname]);
 
-  // mirror header height to :root var for hero offset
+  // Mirror header height to :root var for hero offset
   useEffect(() => {
     const h = scrolled ? HEADER_COMPACT : HEADER_TALL;
     document.documentElement.style.setProperty('--header-h', h);
@@ -60,36 +60,34 @@ export default function Header() {
         height: scrolled ? HEADER_COMPACT : HEADER_TALL,
       }}
     >
-   <div
-  className="w-full flex h-full items-center justify-between gap-3 pr-4 md:pr-10 xl:pr-16 2xl:pr-24"
-  style={{
-    paddingInlineStart: 'env(safe-area-inset-left,0px)',
-  }}
->
-  <Logo className="shrink-0 -ml-10 md:-ml-10" priority />
+      {/* Header row – safe-area aware, tighter gutters */}
+      <div className="container-header w-full flex h-full items-center justify-between gap-2 md:gap-3">
+        <Logo className=" shrink-0" priority />
 
-  <div className="flex items-center gap-2 sm:gap-3">
-    <button
-      ref={triggerRef}
-      type="button"
-      className="inline-flex items-center justify-center rounded-md px-3 py-3 text-white/90 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--rgb-border))]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-      aria-label="Open menu"
-      aria-expanded={open}
-      aria-controls="site-menu"
-      onClick={() => setOpen(true)}
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    </button>
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Drawer trigger */}
+          <button
+            ref={triggerRef}
+            type="button"
+            className="inline-flex items-center justify-center rounded-md px-3 py-3 text-white/90 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--rgb-border))]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            aria-label="Open menu"
+            aria-expanded={open}
+            aria-controls="site-menu"
+            onClick={() => setOpen(true)}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
 
-    <Link href={'/contact' as Route} aria-label="Contact us">
-      <Button as="span" size="md" variant="solid" className="min-w-28 sm:min-w-32">
-        Contact
-      </Button>
-    </Link>
-  </div>
-</div>
+          {/* Primary CTA – uses btn-header for mobile-friendly sizing */}
+          <Link href={'/contact' as Route} aria-label="Contact us">
+            <Button as="span" variant="solid" className="btn-header">
+              Contact
+            </Button>
+          </Link>
+        </div>
+      </div>
 
       {/* bottom hairline (neutral) */}
       <div

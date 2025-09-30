@@ -5,9 +5,11 @@ export type Tier = {
   timeline: string;
   href?: string;
   featured?: boolean;
+  badge?: string;
 };
 export type CarePlan = {
   name: string;
   price: string;
   features: string[];
+  badge?: string;
 };

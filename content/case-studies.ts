@@ -121,92 +121,99 @@ export const CASE_STUDIES: readonly CaseStudy[] = [
   },
 
   {
-    slug: 'boundless-retreats',
-    title: 'Boundless Retreats',
-    subtitle: 'Calm, persuasive booking experience with clear itineraries.',
-    year: 2024,
-    client: 'Boundless Retreats',
-    industry: 'Travel & Hospitality',
-    services: ['Website', 'Booking'] as const,
-    categories: ['Website', 'Booking'] as const,
-    duration: '3 weeks',
-    cover: '/portfolio/boundless/cover.jpg',
-    gallery: [
-      '/portfolio/boundless/gal-1.webp',
-      '/portfolio/boundless/gal-2.webp',
-      '/portfolio/boundless/gal-3.webp',
-    ] as const,
+  slug: 'boundless-apparel',
+  title: 'Boundless',
+  subtitle: 'Adventure-inspired apparel with a bold, minimal site.',
+  year: 2025,
+  client: 'Boundless',
+  industry: 'Apparel & Lifestyle',
+  services: ['Website', 'E-commerce'] as const,
+  categories: ['Website', 'E-commerce'] as const,
+  duration: '3 weeks',
+  cover: '/portfolio/boundless/cover.jpg',
+  gallery: [
+    '/portfolio/boundless/gal-1.webp',
+    '/portfolio/boundless/gal-2.webp',
+    '/portfolio/boundless/gal-3.webp',
+  ] as const,
 
-    problem:
-      'Prospects were overwhelmed by options and dropped off. They needed clarity and trust signals through the booking journey.',
-    approach: [
-      'Structured itineraries and simplified primary path to book.',
-      'Elevated social proof; improved mobile scannability.',
-      'Integrated analytics events on key funnel steps.',
-    ] as const,
-    results: [
-      { label: 'Bookings', value: '↑ 24%' },
-      { label: 'Time to decision', value: '↓ 17%' },
-    ] as const,
+  problem:
+    'Boundless was ready to launch as a South African adventure apparel brand, but had no digital storefront or brand presence online. They needed a site that matched their vision and made it easy for customers to explore and shop their collections.',
+  approach: [
+    'Designed a bold, minimalist site aligned with their “Live Wide Open” brand identity.',
+    'Built a product-first layout with clear categories and simple mobile shopping flows.',
+    'Set up e-commerce foundations with scalable product/gallery sections and integrated checkout.',
+  ] as const,
+  results: [
+    { label: 'Launch readiness', value: 'Complete brand-aligned site ready for first sales' },
+    { label: 'Foundation', value: 'SEO, analytics, and growth systems in place' },
+  ] as const,
 
-    liveUrl: 'https://example.com/boundless',
-    seo: {
-      description:
-        'We simplified discovery-to-booking with clear pages, concise copy, and supportive visuals.',
-      image: '/portfolio/boundless/cover.jpg',
-    },
-
-    og: {
-      image: '/portfolio/boundless/cover.jpg',
-      title: 'Boundless Retreats — Case Study',
-      description:
-        'A calm, persuasive booking flow with clear itineraries and trust signals that lift conversions.',
-    },
+  liveUrl: 'https://www.boundlessapparel.co.za/',
+  seo: {
+    description:
+      'We helped Boundless launch with a bold, minimalist e-commerce site that reflects their adventure-inspired apparel brand.',
+    image: '/portfolio/boundless/cover.jpg',
   },
 
-  {
-    slug: 'lessing-wines',
-    title: 'Lessing Wines',
-    subtitle: 'Elegant catalogue with tasting notes and wholesale enquiries.',
-    year: 2023,
-    client: 'Lessing Wines',
-    industry: 'Wine & Beverages',
-    services: ['E-commerce', 'Website'] as const,
-    categories: ['E-commerce', 'Website'] as const,
-    duration: '4 weeks',
-    cover: '/portfolio/lessing/cover.jpg',
-    gallery: [
-      '/portfolio/lessing/gal-1.webp',
-      '/portfolio/lessing/gal-2.webp',
-      '/portfolio/lessing/gal-3.webp',
-    ] as const,
-
-    problem:
-      'They needed an elegant way to present products with rich tasting notes, while keeping wholesale routes clear.',
-    approach: [
-      'Catalogue-forward layouts that let label design shine.',
-      'Kept routes to purchase and wholesale prominent and simple.',
-      'Optimized assets for faster browsing across devices.',
-    ] as const,
-    results: [
-      { label: 'Catalogue load time', value: '↓ 32%' },
-      { label: 'Wholesale enquiries', value: '↑ 19%' },
-    ] as const,
-
-    liveUrl: 'https://example.com/lessing',
-    seo: {
-      description:
-        'A catalogue-forward experience with elegant product presentation and clear routes to purchase or enquire.',
-      image: '/portfolio/lessing/cover.jpg',
-    },
-
-    og: {
-      image: '/portfolio/lessing/cover.jpg',
-      title: 'Lessing Wines — Case Study',
-      description:
-        'An elegant catalogue experience with tasting notes and clear wholesale enquiry paths.',
-    },
+  og: {
+    image: '/portfolio/boundless/cover.jpg',
+    title: 'Boundless Apparel — Case Study',
+    description:
+      'From vision to launch: a bold, minimal e-commerce site built for South Africa’s adventure apparel brand.',
   },
+},
+
+
+{
+  slug: 'pieter-lessing-art',
+  title: 'Pieter Lessing Art',
+  subtitle: 'Gallery-first website and shop rooted in African aesthetics.',
+  year: 2025,
+  client: 'Pieter Lessing',
+  industry: 'Fine Art & Sculpture',
+  services: ['Website', 'E-commerce'] as const,
+  categories: ['Website', 'E-commerce'] as const,
+  duration: '4 weeks',
+  cover: '/portfolio/pieter/cover.jpg',
+  gallery: [
+    '/portfolio/pieter/gal-1.jpg',
+    '/portfolio/pieter/gal-2.jpg',
+    
+  ] as const,
+
+  problem:
+    'Pieter needed a digital gallery that honours the cultural depth of his work while making it easy to browse, enquire, and purchase.',
+
+  approach: [
+    'Gallery-first layouts that let paintings and sculptures take centre stage.',
+    'Clean shop flow with clear filters (Fine Art, Sculptures, Home Decor & Hospitality) and simple cart/WhatsApp checkout.',
+    'Mobile-first performance and SEO groundwork for future growth.',
+  ] as const,
+
+  results: [
+    { label: 'Launch readiness', value: 'Gallery and shop aligned with Pieter’s artistic identity' },
+    { label: 'Foundation', value: 'Mobile-first design, SEO setup, and scalable shop structure in place' },
+  ] as const,
+
+  liveUrl: 'https://example.com/pieter-lessing-art',
+
+  seo: {
+    description:
+      'A digital gallery and shop for Pieter Lessing’s paintings, sculptures, and mixed media — grounded in African aesthetics.',
+    image: '/portfolio/pieter/cover.jpg',
+  },
+
+  og: {
+    image: '/portfolio/pieter/cover.jpg',
+    title: 'Pieter Lessing Art — Case Study',
+    description:
+      'A gallery-first website and shop showcasing Pieter Lessing’s artworks with a clear path to enquire and purchase.',
+  },
+}
+
+
+
 ] as const;
 
 // Helper to fetch a case by slug

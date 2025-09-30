@@ -249,6 +249,62 @@ html, body { overflow-x: hidden; }
   }
 }
 body { margin: 0; }
+/* header gets smaller gutters, still safe-area aware */
+/* global.css */
+.container-header{
+  width: 100%;
+  max-width: 120rem;
+  margin-inline: auto;
+
+  /* Mobile-first: compact gutters, respect safe-area */
+  padding-left:  max(env(safe-area-inset-left),  clamp(12px, 4vw, 20px));
+  padding-right: max(env(safe-area-inset-right), clamp(12px, 4vw, 20px));
+}
+
+/* ≥640px (sm) – a bit roomier */
+@media (min-width: 640px){
+  .container-header{
+    padding-left:  max(env(safe-area-inset-left), 38px);
+    padding-right: max(env(safe-area-inset-right), 28px);
+  }
+}
+
+/* ≥768px (md) */
+@media (min-width: 768px){
+  .container-header{
+    padding-left:  max(env(safe-area-inset-left), 50px);
+    padding-right: max(env(safe-area-inset-right), 36px);
+  }
+}
+
+/* ≥1024px (lg) */
+@media (min-width: 1024px){
+  .container-header{
+    padding-left:  max(env(safe-area-inset-left), 66px);
+    padding-right: max(env(safe-area-inset-right), 48px);
+  }
+}
+
+/* ≥1536px (2xl) – your original roomy desktop feel */
+@media (min-width: 1536px){
+  .container-header{
+    padding-left:  max(env(safe-area-inset-left), 100px);
+    padding-right: max(env(safe-area-inset-right), 80px);
+  }
+}
+
+
+/* Optional: smaller CTA just for the header on mobile */
+.btn-header {
+  height: 36px;           /* ~h-9 */
+  padding-inline: 12px;   /* ~px-3 */
+  font-size: 13px;        /* ~text-[13px] */
+  border-radius: 12px;
+}
+@media (min-width: 480px){
+  .btn-header { height: 40px; padding-inline: 20px; font-size: 14px; }
+}
+
 
 /* =========================
    Lenis compatibility
