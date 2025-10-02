@@ -5,6 +5,7 @@ import { inter, playfair } from './fonts';
 import Header from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
 import LenisWrapper from '@/components/ux/LenisWrapper';
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.coetzeecreative.co.za'), // ← your prod domain
@@ -61,12 +62,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body>
+      <Analytics/>
         <Header /> {/* <- STAYS OUTSIDE */}
         <LenisWrapper>
           <main id="content">{children}</main>
           <Footer />
         </LenisWrapper>
       </body>
+      
     </html>
   );
 }

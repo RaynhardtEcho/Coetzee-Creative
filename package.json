@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@react-three/drei": "^9.105.6",
     "@react-three/fiber": "^8.15.12",
+    "@vercel/analytics": "^1.5.0",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.2",
